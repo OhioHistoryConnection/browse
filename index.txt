@@ -1,0 +1,372 @@
+<?php
+
+  $THIS_HOST = "http://".$_SERVER["HTTP_HOST"];
+  $THIS_PAGE = "http://".$_SERVER["HTTP_HOST"]."/cdm/browse/index.php";
+  // CDM host domain
+  $CDM_HOST = "http://www.ohiomemory.org";
+  // Collection alias from which you want to retrieve controlled vocabulary
+  $COLL_ALIAS = "p267401coll32";
+  $LETTER_VALUES = array_merge(range(1,9), range('A','Z'));
+  // Only relevant if you want to browse specific field values (in this case a list of specific Ohio Memory participant names from the DC contributor field)
+  $CUSTOM_BROWSE = array("Adams County Historical Society", "Aeronautical Systems Center History Office, WPAFB", "Akron-Summit County Public Library", "Alexandria Museum & Historical Society", "Allen County Museum", "Amherst Historical Society and Sandstone Center Museum", "Amherst Public Library", "Amherst Public Library", "Antioch College", "Archives of the Archdiocese of Cincinnati", "Ashland County Historical Society and Museum", "Ashland University", "Ashtabula County District Library, Geneva Library Branch", "Athenaeum of Ohio", "Athens County Historical Society and Museum", "Attica Area Historical Society", "Auglaize County Historical Society", "Barberton Public Library", "Bellevue Public Library", "Belpre Historical Society", "Birchard Public Library", "Black River Historical Society", "Bluffton Public Library", "Bradford Public Library", "Brecksville Historical Association", "Briggs Lawrence County Public Library", "Brimfield Memorial House Association/ Kelso House Museum", "Bristol Public Library", "Brumback Library", "Bucyrus Historical Society", "Bucyrus Public Library", "Butler County Museum", "Caldwell Public Library", "Capitol Square Review and Advisory Board", "Carillon Historical Park", "Carnegie Public Library", "Carroll County District Library", "Carroll County Historical Society", "Case Western Reserve University", "Center for Archival Collections--Bowling Green State University", "Centerburg Public Library and Local History Center", "Centerville-Washington Township Historical Society", "Champaign County Historical Society", "Champaign County Library", "Children's Hospital (Columbus)", "Chillicothe and Ross County Public Library", "Chippewa-Rogues' Hollow Historical Society", "Cincinnati Art Museum", "Cincinnati Medical Heritage Center, University of Cincinnati", "Cincinnati Museum Center", "Cincinnati Zoo & Botanical Garden", "Clark County Historical Society", "Clark County Public Library", "Clermont County Historical Society", "Cleveland City Council Archives", "Cleveland Clinic Foundation", "Cleveland Heights Historical Society", "Cleveland Institute of Art", "Cleveland Institute of Music", "Cleveland Metroparks Zoo", "Cleveland Museum of Art", "Cleveland Museum of Natural History", "Cleveland Orchestra", "Cleveland Public Library", "Cleveland Public Library, Photograph Collection", "Cleveland Public Library, Preservation", "Cleveland Public Library, Science & Technology Department", "Clinton County Historical Society", "Clyde Public Library", "Columbia Historical Society, Inc.", "Columbus Metropolitan Library", "Columbus Zoo Library", "Coshocton Public Library", "Cowan Pottery Museum", "Creston Historical Society", "Cuyahoga County Archives", "Cuyahoga Falls Historical Society", "Dalton Community Historical Society", "Darke County Historical Society", "Dawes Arboretum", "Dayton Aviation Heritage National Historical Park", "Dayton and Montgomery County Public Library", "Defiance Public Library", "Delphos Canal Commission", "Denison University", "Dittrick Medical History Center", "Dominican Sisters, St. Mary of the Springs", "Dover Historical Society", "Dr. Samuel L. Bossard Memorial Library", "Dublin Public Library and Dublin Historical Society", "Edison Birthplace Museum", "Edna L. Bowyer Records Center & Archives of Warren County", "Edward Huber Machinery Museum", "Elyria Public Library", "Euclid Historical Museum", "Evangelical Lutheran Church in America, Region 6 Archives", "Evergreen Community Library", "Fayette County Courthouse", "Findlay-Hancock County Public Library", "Firelands Historical Society", "First Baptist Church of Delaware", "Flesh Public Library and Museum", "Fort Laurens State Memorial", "French Art Colony", "Gahanna Historical Society", "Garnet A. Wilson Public Library", "Geauga County Historical Society", "Gorman Heritage Farm", "Greater Loveland Historical Society Museum", "Greene County Historical Society", "Greene County Public Library", "Greene County Records Center and Archives", "Guernsey County Historical Society", "Hancock Historical Museum", "Harbor-Topky Memorial Library", "Hardin County Museums", "Harding Hospital Museum", "Harris-Elmore Public Library", "Harrison County Historical Society", "Henderson Memorial Public Library", "Herrick Memorial Library", "Highland County District Library", "Highland County Historical Society", "Hiram College", "Hiram Historical Society", "Historical Collections of the Great Lakes", "Holmes County Historical Society", "Holy Cross-Immaculata Church", "Hopewell Culture National Historical Park", "Hudson Library and Historical Society", "Huron Historical Society", "Jack Nicklaus Museum", "Jackson Center Historical Society", "Jacob Rader Marcus Center of the American Jewish Archives", "Jefferson Depot, Inc.", "John Paulding Historical Society", "Johnny Appleseed Museum", "Kelton House Museum and Garden", "Kent Historical Society", "Kent State University", "Kent State University Museum", "Killbuck Valley Museum", "Kinsman Free Public Library", "Kirtland Temple Historic Site", "Knox County Historical Society", "Lake Erie Islands Historical Society", "Lake Township Historical Society", "Lake View Cemetery", "Lakeside Heritage Society, Inc.", "Lakewood Public Library", "Lane Public Library", "Licking County Historical Society", "Lillian Jones Museum", "Logan County District Library", "Logan County Historical Society", "Lorain City Schools", "Lorain County Historical Society", "Lorain Public Library System", "Loudonville Public Library", "Lucy Hayes Heritage Center", "Lynchburg Historical Society", "Madison County Historical Society", "Mahoning Valley Historical Society", "Malabar Farm State Park", "Manchester Historical Society", "Mansfield Reformatory Preservation Society", "Mansfield-Richland County Public Library", "Marietta College", "Marion County Historical Society", "Marion Palace Theatre", "Marion Union Station Association", "Marshallville Historical Society", "Mary L. Cook Public Library", "Mary Lou Johnson-Hardin County District Library", "Massillon Museum", "Massillon Museum Foundation, Inc.", "Massillon Public Library", "McComb Public Library", "McCook House Museum", "McKinley Birthplace Home and Research Center", "McKinley Memorial Library", "McKinley Museum and National Memorial", "Mechanicsburg Public Library", "Medical Heritage Center, Ohio State University", "Mentor Public Library", "Mercer County Historical Museum", "Methodist Theological School in Ohio", "Miami Conservancy District", "Miami University", "Miami University Archives", "Miamisburg Historical Society", "Middletown Public Library", "Mill Creek MetroParks", "Missionaries of the Precious Blood", "Montgomery County Historical Society", "Moreland Hills Historical Society", "Mount Vernon Nazarene University", "Munroe Falls Historical Society", "Museum of Carousel Art & History", "Myers University", "NASA Office of Public Affairs", "National Afro-American Museum and Cultural Center", "National Heisey Glass Museum", "National Museum of the United States Air Force", "Neil Armstrong Air & Space Museum", "Noble County Historical Society", "Norwalk Public Library", "Northwest Regional Library System", "Notre Dame College", "Oak Hill Public Library", "Oberlin College Archives", "Ohio Agricultural Research and Development Center", "Ohio Department of Natural Resources", "Ohio Dominican University", "Ohio Genealogical Society", "Ohio Historical Society", "Ohio State University Archives", "Ohio State University Cartoon Research Library", "Ohio State University Music and Dance Library", "Ohio State University Orton Geological Museum", "Ohio State University Rare Books", "Ohio State University Theatre Research Institute", "Ohio State University, John Glenn Archives", "Ohio University, Mahn Center for Archives & Special Collections", "Ohio Wesleyan University Historical Collection", "Ohioana Library", "Old St. Mary's Church", "Ottawa County Museum", "Otterbein College", "Paulding County Carnegie Library", "Pemberville Public Library", "Peninsula Library and Historical Society/Cuyahoga Valley Historical Museum", "Perry's Victory and International Peace Memorial", "Piatt Castles", "Pickaway County Historical Society", "Pike Heritage Foundation Museum", "Pioneer & Historical Society of Muskingum", "Piqua Historical Area State Memorial", "Plain City Public Library and Plain City Historical Society", "Pontifical College Josephinum", "Portage County Historical Society", "Portsmouth Public Library", "Preble County District Library", "Procter & Gamble Company Corporate Archives", "Public Library of Cincinnati & Hamilton County", "Public Library of Youngstown and Mahoning Co.", "Puskarich Public Library", "Putnam County District Library", "Putnam County Historical Society", "Quaker Meeting House", "Reed Memorial Library", "Richland County Historical Society", "Ritter Public Library", "Rocky River Historical Society", "Rocky River Public Library", "Rose Melnick Medical Museum Youngstown State University", "Ross C. Purdy Museum", "Ross County Historical Society", "Rossford Public Library", "Rutherford B. Hayes Presidential Center", "Salem Historical Society", "Sandusky Library/Follett House Museum", "Sauder Village", "Scioto County Historical Society", "Selover Public Library", "Seville Historical Society", "Shaker Heights Public Library", "Shaker Historical Society", "Shawnee State University", "Shelby County Historical Society", "Sinclair Community College", "Sisters of Notre Dame", "Sisters of St. Francis", "Sisters of the Precious Blood", "Smith Library of Regional History", "South Euclid Historical Society", "Southern Ohio Museum", "Southwest Public Libraries", "St. John's Episcopal Church of Worthington", "St. Paris Public Library", "Stark County District Library", "State Library of Ohio", "Steamship William G. Mather Museum", "Stow-Munroe Falls Public Library", "Strongsville Historical Society", "Summit County Probate Court", "Swanton Public Library", "Taft Museum of Art", "Tallmadge Historical Society", "The Castle", "Thurber House", "Tiffin-Seneca Public Library", "Toledo Museum of Art", "Toledo-Lucas County Public Library", "Tuscarawas County Historical Society", "Twinsburg Public Library", "Union County Historical Society", "Union Township Public Library", "United Church of Christ Archives", "University of Akron", "University of Cincinnati", "University of Cincinnati German-Americana Collection", "University of Dayton", "University of Findlay", "University of Rio Grande", "Upper Sandusky Community Library", "Urbana University", "Ursuline College", "Ursulines of Brown County", "Wadsworth Public Library", "Wadsworth Public Library", "Ward M. Canaday Center, University of Toledo", "Washington County Public Library", "Waterville Historical Society", "Watt Center for History & the Arts", "Wauseon Public Library", "Way Public Library", "Wayne County Public Library", "Wayne County Public Library - Shreve Branch", "Wells Public Library", "Hurt/Battelle Memorial Library", "Western Reserve Historical Society", "Westerville Public Library", "Westlake Porter Public Library", "Wickliffe Public Library", "Wilberforce University", "William Holmes McGuffey Museum", "William Howard Taft National Historic Site", "Williams County Public Library", "Willoughby Historical Society", "Willoughby-Eastlake Public Library", "Willoughby-Eastlake Public Library - Eastlake", "Willoughby-Eastlake Public Library - Willoughby", "Wood County District Public Library", "Wood County Historical Center", "Wornstaff Memorial Public Library", "Worthington Historical Society", "Worthington Libraries", "Wright State University", "Wyandot County Historical Society", "Youngstown Historical Center of Industry and Labor", "Youngstown State University Archives & Special Collections");
+
+  // set the default browse field
+  $browse_field = "subjec";
+  // get the user-selected browse value if one exists
+  if (isset($_GET['field'])) { $browse_field = strip_tags(trim($_GET['field'])); }
+  $browseFile = "browse_".$browse_field.".json";
+  //$cache_filename = $browsePath."/".$browseFile;
+  $time_expire = time() + 7*24*60*60; // Expire Time (1 week)
+  // set default browse letter ("1" for subjects; "A" for places or particpant names)
+  $browse_letter = ($browse_field == "subjec") ? "1" : "A";
+  // get the user-selected letter or number
+  if (isset($_GET['letter'])) { $browse_letter = strip_tags(trim($_GET['letter'])); }
+  // Our display field name is "place", but is actually mapped to "coveraa" for purposes of retrieving place vocabulary
+  $dc_field = ($browse_field == "place") ? "coveraa" : $browse_field;
+
+  if ($browse_field != 'contri') {
+    // Check file change time
+   /* if(!file_exists($cache_filename) || filectime($cache_filename) >= $time_expire) { */
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, "https://server16007.contentdm.oclc.org/dmwebservices/index.php?q=dmGetCollectionFieldVocabulary/".$COLL_ALIAS."/".$browse_field."/0/0/json");
+      curl_setopt($ch, CURLOPT_HEADER, 0);  // do not return http headers
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);  // return the contents of the call
+      curl_setopt($ch, CURLOPT_TIMEOUT, 90); // same as php.ini max_execution_time
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+      $cdm_data_json = curl_exec($ch);
+
+      //file_put_contents($cache_filename, $cdm_data_json);
+   /* }else{ 
+      // Fetch cached json
+      $cdm_data_json = file_get_contents($cache_filename);
+    } */
+    $browse_array = json_decode($cdm_data_json, true);
+    
+  } else {
+    $browse_array = $CUSTOM_BROWSE;
+  }
+
+?>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Ohio Memory, browse by <?php switch ($browse_field) { case "subjec": echo("subject"); break; case "place": echo("place"); break; case "contri": echo("submitting institution"); } ?></title>
+  <style type="text/css">
+    body {
+		margin:0;
+		padding:0;
+		border:0;			/* This removes the border around the viewport in old versions of IE */
+		width:100%;
+		background:#fff;
+		min-width:600px;    	/* Minimum width of layout - remove line if not required */
+						/* The min-width property does not work in old versions of Internet Explorer */
+		font-size:90%;
+		font-family: verdana, arial, sans-serif;
+  	}
+  	a {
+  		color:#369;
+  	}
+  	a:hover {
+  		color:red;
+  		text-decoration:none;
+  	}
+    #navcontainer
+    {
+    margin: 0 auto;
+    padding: 1em 0 0 0;
+    font-family: georgia, serif;
+    /*text-transform: lowercase;*/
+    }
+
+    /* to stretch the container div to contain floated list */
+    #navcontainer:after
+    {
+    content: ".";
+    display: block;
+    line-height: 1px;
+    font-size: 1px;
+    clear: both;
+    }
+
+    ul#navlist
+    {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    width: 80%;
+    font-size: 0.8em;
+    }
+
+    ul#navlist li
+    {
+    display: block;
+    float: left;
+    width: 24px;
+    margin: 0;
+    padding: 0;
+    }
+
+    ul#navlist li a
+    {
+    display: block;
+    width: 100%;
+    padding: 0.5em;
+    border-width: 1px;
+    border-color: #ffe #aaab9c #ccc #fff;
+    border-style: solid;
+    color: #777;
+    text-decoration: none;
+    background: #F0F0F0; /*f7f2ea*/
+    }
+
+    #navcontainer>ul#navlist li a { width: auto; }
+
+    ul#navlist li#active a
+    {
+    background: #f0e7d7;
+    color: #800000;
+    }
+
+    ul#navlist li a:hover, ul#navlist li#active a:hover
+    {
+    color: #800000;
+    background: transparent;
+    border-color: #aaab9c #fff #fff #ccc;
+    }
+    #tabs {
+      float:left;
+      font-size:90%;
+      font-family: verdana, arial, sans-serif;
+      padding: 20px;
+      margin-left:20px;
+      width:40%;
+    }
+    #countyMap {
+      float:left;
+      margin-top:50px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="navcontainer">
+  <ul id="navlist">
+    <?php
+      for ($i=0; $i < count($LETTER_VALUES); $i++) {
+        if (is_numeric($LETTER_VALUES[$i]) && $browse_field != "subjec") { continue; }
+        echo '<li><a href="'.$THIS_PAGE.'?letter='.$LETTER_VALUES[$i].'&field='.$browse_field.'">'.$LETTER_VALUES[$i].'</a></li>';
+      }
+    ?>
+  </ul>
+</div>
+<div id="browseContainer">
+  <div id="tabs"<?php echo ($browse_field == "coveraa") ? 'style="width:300px;' : ''; ?>">
+    <?php
+      echo("<b>".$browse_letter."</b>:<br>");
+      for ($i = 0; $i < count($browse_array); $i++) {
+        if (preg_match('/^[^0-9A-Za-z].+/', $browse_array[$i])) { continue; }
+        $browse_upper = ucfirst($browse_array[$i]);
+        $current_letter = substr($browse_upper, 0, 1);
+        if ($current_letter == $browse_letter) {
+          //echo('<p><a href="'.$CDM_HOST .'/cdm/search/searchterm/'.urlencode($browse_upper).'/field/'.$dc_field.'/mode/exact/conn/and/order/nosort">'.rawurldecode(preg_replace('/\%25/','%',$browse_upper)).'</a></p>');
+          echo('<p><a href="'.$CDM_HOST .'/cdm/search/searchterm/'.preg_replace('/\\//','%252F',$browse_upper).'/field/'.$dc_field.'/mode/exact/conn/and/order/nosort">'.$browse_upper.'</a></p>');
+        }
+      }
+    ?>
+  </div>
+  <div id="countyMap">
+    <?php echo ($browse_field == "place") ? '<img src="/ui/custom/default/collection/default/resources/custompages/images/mapclick.jpg" alt="Map of Ohio" usemap="#county" border="0">' : ''; ?>
+  </div>
+</div>
+
+<map name="county">
+  <area shape="poly" coords="170,62,197,62,210,75,206,81,179,80,170,74" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Ottawa%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Ottawa County" title="Ottawa County">
+  <area shape="rect" coords="171,85,227,108" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Sandusky%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Sandusky County" title="Sandusky County">
+  <area shape="rect" coords="232,88,278,105" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Erie%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Erie County" title="Erie County">
+  <area shape="poly" coords="284,91,285,135,297,135,325,104,315,76" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Lorain%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Lorain County" title="Lorain County">
+  <area shape="poly" coords="323,75,324,93,332,95,333,104,356,105,358,91,378,94,378,71,368,63" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Cuyahoga%20near1%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Cuyahoga County" title="Cuyahoga County">
+  <area shape="poly" coords="370,58,385,36,418,25,418,41,409,53,389,55,389,64,376,65" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Lake%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Lake County" title="Lake County">
+  <area shape="poly" coords="384,69,396,67,395,57,420,57,420,93,384,92" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Geauga%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Geauga County" title="Geauga County">
+  <area shape="rect" coords="426,76,471,117" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Trumbull%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Trumbull County" title="Trumbull County">
+  <area shape="rect" coords="384,98,422,138" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Portage%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Portage County" title="Portage County">
+  <area shape="rect" coords="351,112,382,143" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Summit%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Summit County" title="Summit County">
+  <area shape="poly" coords="322,110,350,110,349,145,304,146,303,132,313,131,312,122,321,120" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Medina%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Medina County" title="Medina County">
+  <area shape="rect" coords="231,109,279,137" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Huron%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Huron County" title="Huron County">
+  <area shape="rect" coords="169,114,225,142" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Seneca%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Seneca County" title="Seneca County">
+  <area shape="poly" coords="243,72,305,73,285,84,244,84" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Johnson%27s%2BIsland%22/field/coveraa/mode/all/conn/and/order/nosort" alt="Johnson's Island" title="Johnson's Island">
+  <area shape="poly" coords="120,126,120,168,151,168,153,153,162,143,162,126" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Hancock%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Hancock County" title="Hancock County">
+  <area shape="rect" coords="69,124,116,155" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Putnam%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Putnam County" title="Putnam County">
+  <area shape="rect" coords="19,117,65,143" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Paulding%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Paulding County" title="Paulding County">
+  <area shape="rect" coords="425,126,472,152" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Mahoning%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Mahoning County" title="Mahoning County">
+  <area shape="poly" coords="20,150,55,151,56,160,63,163,63,170,56,172,55,181,19,180" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Van%20Wert%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Van Wert County" title="Van Wert County">
+  <area shape="poly" coords="69,169,95,168,95,163,110,163,113,190,85,190,77,186,63,186,63,175" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Allen%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Allen County" title="Allen County">
+  <area shape="rect" coords="120,175,156,210" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Hardin%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Hardin County" title="Hardin County">
+  <area shape="poly" coords="164,150,195,151,196,185,162,183,160,170,157,163" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Wyandot%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Wyandot County" title="Wyandot County">
+  <area shape="rect" coords="201,151,240,183" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Crawford%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Crawford County" title="Crawford County">
+  <area shape="poly" coords="241,150,242,185,255,185,254,205,269,207,279,207,278,190,276,176,269,160,269,153" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Richland%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Richland County" title="Richland County">
+  <area shape="poly" coords="274,141,272,151,271,163,277,168,280,181,285,191,285,204,292,203,295,189,302,189,303,152,295,140" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Ashland%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Ashland County" title="Ashland County">
+  <area shape="rect" coords="308,152,353,192" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Wayne%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Wayne County" title="Wayne County">
+  <area shape="poly" coords="358,160,383,160,384,151,411,152,414,179,396,180,395,191,358,191" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Stark%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Stark County" title="Stark County">
+  <area shape="poly" coords="418,160,471,160,472,190,441,191,438,180,418,180" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Columbiana%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Columbiana County" title="Columbiana County">
+  <area shape="rect" coords="17,187,53,234" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Mercer%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Mercer County" title="Mercer County">
+  <area shape="poly" coords="56,192,55,231,62,231,66,217,102,216,102,209,113,209,113,200" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Auglaize%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Auglaize County" title="Auglaize County">
+  <area shape="poly" coords="169,193,169,213,190,213,190,222,206,222,214,214,214,192" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Marion%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Marion County" title="Marion County">
+  <area shape="poly" coords="229,188,248,186,251,207,247,210,246,235,222,235,217,197" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Morrow%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Morrow County" title="Morrow County">
+  <area shape="rect" coords="253,212,295,248" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Knox%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Knox County" title="Knox County">
+  <area shape="rect" coords="301,196,350,221" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Holmes%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Holmes County" title="Holmes County">
+  <area shape="poly" coords="354,198,354,232,365,232,365,254,387,253,388,242,396,239,396,212,391,205,389,196" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Tuscarawas%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Tuscarawas County" title="Tuscarawas County">
+  <area shape="rect" coords="399,185,432,222" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Carroll%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Carrol County" title="Carrol County">
+  <area shape="poly" coords="432,207,443,207,443,202,451,202,456,206,466,213,466,226,465,245,457,260,442,257,443,222,434,221" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Jefferson%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Jefferson County" title="Jefferson County">
+  <area shape="rect" coords="15,239,53,295" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Darke%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Darke County" title="Darke County">
+  <area shape="poly" coords="57,236,58,257,95,258,98,245,100,225,70,221,66,236" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Shelby%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Shelby County" title="Shelby County">
+  <area shape="rect" coords="105,218,151,248" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Logan%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Logan County" title="Logan County">
+  <area shape="poly" coords="158,219,183,219,183,255,191,255,189,271,162,269,155,250" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Union%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Union County" title="Union County">
+  <area shape="poly" coords="186,226,216,232,218,241,237,242,236,266,195,265,194,249,186,250" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Delaware%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Delaware County" title="Delaware County">
+  <area shape="poly" coords="302,226,346,226,349,237,357,237,358,252,350,254,350,258,302,259" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Coshocton%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Coshocton County" title="Coshocton County">
+  <area shape="rect" coords="398,225,440,258" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Harrison%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Harrison County" title="Harrison County">
+  <area shape="rect" coords="57,261,96,299" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Miami%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Miami County" title="Miami County">
+  <area shape="poly" coords="104,252,101,278,153,282,155,259" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Champaign%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Champaign County" title="Champaign County">
+  <area shape="poly" coords="159,274,183,274,184,311,182,327,147,324" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Madison%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Madison County" title="Madison County">
+  <area shape="poly" coords="195,271,234,272,232,291,231,300,232,311,189,311,186,287" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Franklin%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Franklin County" title="Franklin County">
+  <area shape="rect" coords="243,254,293,294" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Licking%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Licking County" title="Licking County">
+  <area shape="poly" coords="300,265,300,280,299,296,304,298,304,309,315,313,349,316,348,267" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Muskingum%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Muskingum County" title="Muskingum County">
+  <area shape="poly" coords="351,266,359,268,356,258,387,258,389,265,399,265,400,287,371,294,362,302,356,307" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Guernsey%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Guernsey County" title="Guernsey County">
+  <area shape="rect" coords="405,263,452,304" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Belmont%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Belmont County" title="Belmont County">
+  <area shape="poly" coords="102,285,151,289,142,318,100,307" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Clark%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Clark County" title="Clark County">
+  <area shape="poly" coords="233,297,232,343,247,344,274,330,273,312,265,308,266,299" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Fairfield%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Fairfield County" title="Fairfield County">
+  <area shape="poly" coords="269,298,269,306,279,308,278,321,282,326,282,341,310,341,308,316,297,311,298,301" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Perry%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Perry County" title="Perry County">
+  <area shape="poly" coords="320,320,320,354,347,353,350,339,359,340,355,323" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Morgan%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Morgan County" title="Morgan County">
+  <area shape="poly" coords="356,309,367,310,367,303,379,302,379,298,387,298,394,295,400,295,400,303,392,304,391,333,371,334,363,329" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Noble%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Noble County" title="Noble County">
+  <area shape="poly" coords="397,307,397,323,403,327,402,343,429,341,438,331,441,312,441,307" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Monroe%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Monroe County" title="Monroe County">
+  <area shape="rect" coords="14,301,49,347" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Preble%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Preble County" title="Preble County">
+  <area shape="poly" coords="52,303,81,303,90,312,86,343,53,343" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Montgomery%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Montgomery County" title="Montgomery County">
+  <area shape="poly" coords="96,309,136,322,136,348,92,344" href="<?=$CDM_HOST ?>/cdm/search/searchterm/greene%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Greene County" title="Greene County">
+  <area shape="poly" coords="142,330,142,349,151,353,150,371,166,371,180,356,180,333" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Fayette%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Fayette County" title="Fayette County">
+  <area shape="rect" coords="185,319,230,355" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Pickaway%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Pickaway County" title="Pickaway County">
+  <area shape="poly" coords="243,349,254,349,255,343,267,344,270,336,279,336,279,345,288,345,300,351,299,359,287,362,287,371,263,368,244,373" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Hocking%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Hocking County" title="Hocking County">
+  <area shape="poly" coords="292,364,305,363,306,352,313,351,315,362,334,363,334,380,342,391,349,389,345,397,295,393" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Athens%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Athens County" title="Athens County">
+  <area shape="poly" coords="340,358,352,360,354,344,425,344,407,367,388,377,370,373,366,388,346,385,338,376" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Washington%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Washington County" title="Washington County">
+  <area shape="rect" coords="14,351,60,383" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Butler%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Butler County" title="Butler County">
+  <area shape="rect" coords="65,350,101,387" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Warren%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Warren County" title="Warren County">
+  <area shape="poly" coords="103,352,144,354,143,374,121,391,102,391" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Clinton%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Clinton County" title="Clinton County">
+  <area shape="poly" coords="185,358,236,361,233,398,177,396,171,380" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Ross%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Ross County" title="Ross County">
+  <area shape="poly" coords="242,377,265,377,270,373,285,376,284,417,276,417,272,403,256,396,242,395" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Vinton%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Vinton County" title="Vinton County">
+  <area shape="poly" coords="290,399,344,400,345,434,332,444,318,423,288,422" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Meigs%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Meigs County" title="Meigs County">
+  <area shape="poly" coords="14,387,12,409,31,418,50,415,63,426,69,389" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Hamilton%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Hamilton County" title="Hamilton County">
+  <area shape="poly" coords="74,395,99,396,95,457,78,453,69,429,66,415" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Clermont%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Clermont County" title="Clermont County">
+  <area shape="poly" coords="104,396,99,456,110,454,132,475,136,428,114,429,114,396" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Brown%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Brown County" title="Brown County">
+  <area shape="poly" coords="119,397,147,378,165,378,167,394,169,416,141,422,117,423" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Highland%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Highland County" title="Highland County">
+  <area shape="poly" coords="175,402,173,416,193,430,231,430,233,404" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Pike%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Pike County" title="Pike County">
+  <area shape="poly" coords="242,400,260,405,273,414,269,443,243,444,241,429,235,431,237,406" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Jackson%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Jackson County" title="Jackson County">
+  <area shape="poly" coords="140,427,173,421,180,427,179,475,158,467,143,471,136,476" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Adams%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Adams County" title="Adams County">
+  <area shape="poly" coords="185,430,186,476,193,478,209,461,225,459,232,485,239,480,236,470,242,469,245,458,245,449,237,449,235,436" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Scioto%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Scioto County" title="Scioto County">
+  <area shape="poly" coords="242,487,239,474,247,470,247,464,254,450,260,458,268,464,272,470,282,471,282,487,288,489,279,504,257,507" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Lawrence%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Lawrence County" title="Lawrence County">
+  <area shape="poly" coords="273,421,308,427,305,446,297,451,301,469,301,481,286,480,283,467,274,464,263,454,260,449,274,449" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Gallia%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Gallia County" title="Gallia County">
+  <area shape="poly" coords="426,28,426,71,470,71,470,10" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Ashtabula%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Ashtabula County" title="Ashtabula County">
+  <area shape="poly" coords="21,46,21,78,62,79,62,59,59,46" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Williams%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Williams County" title="Williams County">
+  <area shape="rect" coords="66,47,115,74" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Fulton%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Fulton County" title="Fulton County">
+  <area shape="poly" coords="119,46,119,84,130,81,140,67,152,60,185,58,177,46" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Lucas%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Lucas County" title="Lucas County">
+  <area shape="poly" coords="119,90,119,119,164,119,165,63,154,63,135,81" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Wood%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Wood County" title="Wood County">
+  <area shape="poly" coords="69,78,116,79,115,118,81,119,81,85,69,84" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Henry%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Henry County" title="Henry County">
+  <area shape="poly" coords="21,87,78,87,77,115,56,114,55,107,21,107" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Defiance%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Defiance County" title="Defiance County">
+  <area shape="poly" coords="205,30,291,31,291,43,239,47,209,46" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Gibraltar%20Island/field/coveraa/mode/all/conn/and/order/nosort" alt="Gibraltar Island" title="Gibraltar Island">
+  <area shape="poly" coords="229,61,241,62,242,54,365,57,370,46,243,47,227,49" href="<?=$CDM_HOST ?>/cdm/search/searchterm/South+Bass%20Island/field/coveraa/mode/all/conn/and/order/nosort" alt="South Bass Island" title="South Bass Island">
+  <area shape="poly" coords="256,71,315,70,313,58,245,56,246,66,248,70" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Kelleys%20Island/field/coveraa/mode/all/conn/and/order/nosort" alt="Kelleys Island" title="Kelley Island">
+  <area shape="poly" coords="170,62,197,62,210,75,206,81,179,80,170,74" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Ottawa%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Ottawa County" title="Ottawa County">
+  <area shape="rect" coords="171,85,227,108" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Sandusky%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Sandusky County" title="Sandusky County">
+  <area shape="rect" coords="232,88,278,105" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Erie%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Erie County" title="Erie County">
+  <area shape="poly" coords="284,91,285,135,297,135,325,104,315,76" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Lorain%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Lorain County" title="Lorain County">
+  <area shape="poly" coords="323,75,324,93,332,95,333,104,356,105,358,91,378,94,378,71,368,63" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Cuyahoga%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Cuyahoga County" title="Cuyahoga County">
+  <area shape="poly" coords="370,58,385,36,418,25,418,41,409,53,389,55,389,64,376,65" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Lake%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Lake County" title="Lake County">
+  <area shape="poly" coords="384,69,396,67,395,57,420,57,420,93,384,92" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Geauga%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Geauga County" title="Geauga County">
+  <area shape="rect" coords="426,76,471,117" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Trumbull%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Trumbull County" title="Trumbull County">
+  <area shape="rect" coords="384,98,422,138" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Portage%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Portage County" title="Portage County">
+  <area shape="rect" coords="351,112,382,143" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Summit%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Summit County" title="Summit County">
+  <area shape="poly" coords="322,110,350,110,349,145,304,146,303,132,313,131,312,122,321,120" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Medina%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Medina County" title="Medina County">
+  <area shape="rect" coords="231,109,279,137" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Huron%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Huron County" title="Huron County">
+  <area shape="rect" coords="169,114,225,142" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Seneca%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Seneca County" title="Seneca County">
+  <area shape="poly" coords="243,72,305,73,285,84,244,84" href="<?=$CDM_HOST ?>/cdm/search/searchterm/http://worlddmc.ohiolink.edu/OMP/Category?fieldname=place&searchstring=%22Johnson%27s%2BIsland%22&searchstatus=0&searchtype=kw&sort=title/field/coveraa/mode/all/conn/and/order/nosort" alt="Johnson's Island" title="Johnson's Island">
+  <area shape="poly" coords="120,126,120,168,151,168,153,153,162,143,162,126" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Hancock%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Hancock County" title="Hancock County">
+  <area shape="rect" coords="69,124,116,155" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Putnam%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Putnam County" title="Putnam County">
+  <area shape="rect" coords="19,117,65,143" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Paulding%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Paulding County" title="Paulding County">
+  <area shape="rect" coords="425,126,472,152" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Mahoning%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Mahoning County" title="Mahoning County">
+  <area shape="poly" coords="20,150,55,151,56,160,63,163,63,170,56,172,55,181,19,180" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Van%20Wert%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Van Wert County" title="Van Wert County">
+  <area shape="poly" coords="69,169,95,168,95,163,110,163,113,190,85,190,77,186,63,186,63,175" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Allen%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Allen County" title="Allen County">
+  <area shape="rect" coords="120,175,156,210" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Hardin%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Hardin County" title="Hardin County">
+  <area shape="poly" coords="164,150,195,151,196,185,162,183,160,170,157,163" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Wyandot%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Wyandot County" title="Wyandot County">
+  <area shape="rect" coords="201,151,240,183" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Crawford%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Crawford County" title="Crawford County">
+  <area shape="poly" coords="241,150,242,185,255,185,254,205,269,207,279,207,278,190,276,176,269,160,269,153" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Richland%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Richland County" title="Richland County">
+  <area shape="poly" coords="274,141,272,151,271,163,277,168,280,181,285,191,285,204,292,203,295,189,302,189,303,152,295,140" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Ashland%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Ashland County" title="Ashland County">
+  <area shape="rect" coords="308,152,353,192" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Wayne%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Wayne County" title="Wayne County">
+  <area shape="poly" coords="358,160,383,160,384,151,411,152,414,179,396,180,395,191,358,191" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Stark%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Stark County" title="Stark County">
+  <area shape="poly" coords="418,160,471,160,472,190,441,191,438,180,418,180" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Columbiana%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Columbiana County" title="Columbiana County">
+  <area shape="rect" coords="17,187,53,234" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Mercer%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Mercer County" title="Mercer County">
+  <area shape="poly" coords="56,192,55,231,62,231,66,217,102,216,102,209,113,209,113,200" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Auglaize%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Auglaize County" title="Auglaize County">
+  <area shape="poly" coords="169,193,169,213,190,213,190,222,206,222,214,214,214,192" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Marion%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Marion County" title="Marion County">
+  <area shape="poly" coords="229,188,248,186,251,207,247,210,246,235,222,235,217,197" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Morrow%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Morrow County" title="Morrow County">
+  <area shape="rect" coords="253,212,295,248" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Knox%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Knox County" title="Knox County">
+  <area shape="rect" coords="301,196,350,221" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Holmes%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Holmes County" title="Holmes County">
+  <area shape="poly" coords="354,198,354,232,365,232,365,254,387,253,388,242,396,239,396,212,391,205,389,196" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Tuscarawas%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Tuscarawas County" title="Tuscarawas County">
+  <area shape="rect" coords="399,185,432,222" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Carroll%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Carrol County" title="Carrol County">
+  <area shape="poly" coords="432,207,443,207,443,202,451,202,456,206,466,213,466,226,465,245,457,260,442,257,443,222,434,221" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Jefferson%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Jefferson County" title="Jefferson County">
+  <area shape="rect" coords="15,239,53,295" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Darke%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Darke County" title="Darke County">
+  <area shape="poly" coords="57,236,58,257,95,258,98,245,100,225,70,221,66,236" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Shelby%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Shelby County" title="Shelby County">
+  <area shape="rect" coords="105,218,151,248" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Logan%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Logan County" title="Logan County">
+  <area shape="poly" coords="158,219,183,219,183,255,191,255,189,271,162,269,155,250" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Union%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Union County" title="Union County">
+  <area shape="poly" coords="186,226,216,232,218,241,237,242,236,266,195,265,194,249,186,250" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Delaware%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Delaware County" title="Delaware County">
+  <area shape="poly" coords="302,226,346,226,349,237,357,237,358,252,350,254,350,258,302,259" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Coshocton%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Coshocton County" title="Coshocton County">
+  <area shape="rect" coords="398,225,440,258" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Harrison%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Harrison County" title="Harrison County">
+  <area shape="rect" coords="57,261,96,299" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Miami%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Miami County" title="Miami County">
+  <area shape="poly" coords="104,252,101,278,153,282,155,259" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Champaign%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Champaign County" title="Champaign County">
+  <area shape="poly" coords="159,274,183,274,184,311,182,327,147,324" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Madison%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Madison County" title="Madison County">
+  <area shape="poly" coords="195,271,234,272,232,291,231,300,232,311,189,311,186,287" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Franklin%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Franklin County" title="Franklin County">
+  <area shape="rect" coords="243,254,293,294" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Licking%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Licking County" title="Licking County">
+  <area shape="poly" coords="300,265,300,280,299,296,304,298,304,309,315,313,349,316,348,267" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Muskingum%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Muskingum County" title="Muskingum County">
+  <area shape="poly" coords="351,266,359,268,356,258,387,258,389,265,399,265,400,287,371,294,362,302,356,307" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Guernsey%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Guernsey County" title="Guernsey County">
+  <area shape="rect" coords="405,263,452,304" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Belmont%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Belmont County" title="Belmont County">
+  <area shape="poly" coords="102,285,151,289,142,318,100,307" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Clark%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Clark County" title="Clark County">
+  <area shape="poly" coords="233,297,232,343,247,344,274,330,273,312,265,308,266,299" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Fairfield%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Fairfield County" title="Fairfield County">
+  <area shape="poly" coords="269,298,269,306,279,308,278,321,282,326,282,341,310,341,308,316,297,311,298,301" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Perry%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Perry County" title="Perry County">
+  <area shape="poly" coords="320,320,320,354,347,353,350,339,359,340,355,323" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Morgan%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Morgan County" title="Morgan County">
+  <area shape="poly" coords="356,309,367,310,367,303,379,302,379,298,387,298,394,295,400,295,400,303,392,304,391,333,371,334,363,329" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Noble%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Noble County" title="Noble County">
+  <area shape="poly" coords="397,307,397,323,403,327,402,343,429,341,438,331,441,312,441,307" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Monroe%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Monroe County" title="Monroe County">
+  <area shape="rect" coords="14,301,49,347" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Preble%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Preble County" title="Preble County">
+  <area shape="poly" coords="52,303,81,303,90,312,86,343,53,343" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Montgomery%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Montgomery County" title="Montgomery County">
+  <area shape="poly" coords="96,309,136,322,136,348,92,344" href="<?=$CDM_HOST ?>/cdm/search/searchterm/greene%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Greene County" title="Greene County">
+  <area shape="poly" coords="142,330,142,349,151,353,150,371,166,371,180,356,180,333" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Fayette%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Fayette County" title="Fayette County">
+  <area shape="rect" coords="185,319,230,355" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Pickaway%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Pickaway County" title="Pickaway County">
+  <area shape="poly" coords="243,349,254,349,255,343,267,344,270,336,279,336,279,345,288,345,300,351,299,359,287,362,287,371,263,368,244,373" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Hocking%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Hocking County" title="Hocking County">
+  <area shape="poly" coords="292,364,305,363,306,352,313,351,315,362,334,363,334,380,342,391,349,389,345,397,295,393" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Athens%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Athens County" title="Athens County">
+  <area shape="poly" coords="340,358,352,360,354,344,425,344,407,367,388,377,370,373,366,388,346,385,338,376" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Washington%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Washington County" title="Washington County">
+  <area shape="rect" coords="14,351,60,383" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Butler%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Butler County" title="Butler County">
+  <area shape="rect" coords="65,350,101,387" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Warren%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Warren County" title="Warren County">
+  <area shape="poly" coords="103,352,144,354,143,374,121,391,102,391" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Clinton%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Clinton County" title="Clinton County">
+  <area shape="poly" coords="185,358,236,361,233,398,177,396,171,380" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Ross%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Ross County" title="Ross County">
+  <area shape="poly" coords="242,377,265,377,270,373,285,376,284,417,276,417,272,403,256,396,242,395" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Vinton%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Vinton County" title="Vinton County">
+  <area shape="poly" coords="290,399,344,400,345,434,332,444,318,423,288,422" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Meigs%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Meigs County" title="Meigs County">
+  <area shape="poly" coords="14,387,12,409,31,418,50,415,63,426,69,389" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Hamilton%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Hamilton County" title="Hamilton County">
+  <area shape="poly" coords="74,395,99,396,95,457,78,453,69,429,66,415" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Clermont%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Clermont County" title="Clermont County">
+  <area shape="poly" coords="104,396,99,456,110,454,132,475,136,428,114,429,114,396" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Brown%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Brown County" title="Brown County">
+  <area shape="poly" coords="119,397,147,378,165,378,167,394,169,416,141,422,117,423" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Highland%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Highland County" title="Highland County">
+  <area shape="poly" coords="175,402,173,416,193,430,231,430,233,404" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Pike%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Pike County" title="Pike County">
+  <area shape="poly" coords="242,400,260,405,273,414,269,443,243,444,241,429,235,431,237,406" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Jackson%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Jackson County" title="Jackson County">
+  <area shape="poly" coords="140,427,173,421,180,427,179,475,158,467,143,471,136,476" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Adams%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Adams County" title="Adams County">
+  <area shape="poly" coords="185,430,186,476,193,478,209,461,225,459,232,485,239,480,236,470,242,469,245,458,245,449,237,449,235,436" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Scioto%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Scioto County" title="Scioto County">
+  <area shape="poly" coords="242,487,239,474,247,470,247,464,254,450,260,458,268,464,272,470,282,471,282,487,288,489,279,504,257,507" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Lawrence%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Lawrence County" title="Lawrence County">
+  <area shape="poly" coords="273,421,308,427,305,446,297,451,301,469,301,481,286,480,283,467,274,464,263,454,260,449,274,449" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Gallia%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Gallia County" title="Gallia County">
+  <area shape="poly" coords="426,28,426,71,470,71,470,10" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Ashtabula%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Ashtabula County" title="Ashtabula County">
+  <area shape="poly" coords="21,46,21,78,62,79,62,59,59,46" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Williams%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Williams County" title="Williams County">
+  <area shape="rect" coords="66,47,115,74" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Fulton%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Fulton County" title="Fulton County">
+  <area shape="poly" coords="119,46,119,84,130,81,140,67,152,60,185,58,177,46" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Lucas%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Lucas County" title="Lucas County">
+  <area shape="poly" coords="119,90,119,119,164,119,165,63,154,63,135,81" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Wood%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Wood County" title="Wood County">
+  <area shape="poly" coords="69,78,116,79,115,118,81,119,81,85,69,84" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Henry%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Henry County" title="Henry County">
+  <area shape="poly" coords="21,87,78,87,77,115,56,114,55,107,21,107" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Defiance%20County/field/coveraa/mode/all/conn/and/order/nosort" alt="Defiance County" title="Defiance County">
+  <area shape="poly" coords="205,30,291,31,291,43,239,47,209,46" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Gibraltar%20Island/field/coveraa/mode/all/conn/and/order/nosort" alt="Gibraltar Island" title="Gibraltar Island">
+  <area shape="poly" coords="229,61,241,62,242,54,365,57,370,46,243,47,227,49" href="<?=$CDM_HOST ?>/cdm/search/searchterm/South%20Bass%20Island/field/coveraa/mode/all/conn/and/order/nosort" alt="South Bass Island" title="South Bass Island">
+  <area shape="poly" coords="256,71,315,70,313,58,245,56,246,66,248,70" href="<?=$CDM_HOST ?>/cdm/search/searchterm/Kelleys%20Island/field/coveraa/mode/all/conn/and/order/nosort" alt="Kelleys Island" title="Kelley Island">
+</map>
+
+</body>
+</html>

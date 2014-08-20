@@ -1,0 +1,93 @@
+﻿body {
+	margin:0;
+	padding:0;
+	border:0;			/* This removes the border around the viewport in old versions of IE */
+	width:100%;
+	background:#fff;
+	min-width:600px;    	/* Minimum width of layout - remove line if not required */
+					/* The min-width property does not work in old versions of Internet Explorer */
+	font-size:90%;
+	font-family: verdana, arial, sans-serif;
+}
+a {
+	color:#369;
+}
+a:hover {
+	color:red;
+	text-decoration:none;
+}
+#navcontainer
+{
+	margin: 0 auto;
+	padding: 1em 0 0 0;
+	font-family: georgia, serif;
+	/*text-transform: lowercase;*/
+}
+
+/* to stretch the container div to contain floated list */
+#navcontainer:after
+{
+	content: ".";
+	display: block;
+	line-height: 1px;
+	font-size: 1px;
+	clear: both;
+}
+
+ul#navlist
+{
+	list-style: none;
+	padding: 0;
+	margin: 0 auto;
+	width: 80%;
+	font-size: 0.8em;
+}
+
+ul#navlist li
+{
+	display: block;
+	float: left;
+	width: 24px;
+	margin: 0;
+	padding: 0;
+}
+
+ul#navlist li a
+{
+	display: block;
+	width: 100%;
+	padding: 0.5em;
+	border-width: 1px;
+	border-color: #ffe #aaab9c #ccc #fff;
+	border-style: solid;
+	color: #777;
+	text-decoration: none;
+	background: #F0F0F0; /*f7f2ea*/
+}
+
+#navcontainer>ul#navlist li a { width: auto; }
+
+ul#navlist li#active a
+{
+	background: #f0e7d7;
+	color: #800000;
+}
+
+ul#navlist li a:hover, ul#navlist li#active a:hover
+{
+	color: #800000;
+	background: transparent;
+	border-color: #aaab9c #fff #fff #ccc;
+}
+#tabs {
+	float:left;
+	font-size:90%;
+	font-family: verdana, arial, sans-serif;
+	padding: 20px;
+	margin-left:20px;
+	width:40%;
+}
+#countyMap {
+	float:left;
+	margin-top:50px;
+}
